@@ -9,7 +9,7 @@ export default function Bookshelf(props) {
         <ol className="books-grid">
           {props.bookList.map((book) => {
             return (
-              <li>
+              <li key={book.id}>
                 <Book data={book} />
               </li>
             );
