@@ -6,9 +6,7 @@ export default class BookScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      crBooks: [],
-      wtrBooks: [],
-      readBooks: [],
+      books: [],
     };
   }
 
@@ -20,15 +18,19 @@ export default class BookScreen extends React.Component {
       const newWTRBooks = books.filter((book) => book.shelf === "wantToRead");
       const newReadBooks = books.filter((book) => book.shelf === "read");
 
-      this.setState({
-        crBooks: newCRBooks,
-        wtrBooks: newWTRBooks,
-        readBooks: newReadBooks,
-      });
+      this.setState((prevState) => ({
+        books: [newCRBooks, newWTRBooks, newReadBooks],
+      }));
     });
   }
 
   render() {
+    const shelfType = {
+      currentlyReading: "Currently Reading",
+      wantToRead: "Want to Read",
+      read: "Read",
+    };
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -36,12 +38,13 @@ export default class BookScreen extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            <Bookshelf
-              title="Currently Reading"
-              bookList={this.state.crBooks}
-            />
-            <Bookshelf title="Want to Read" bookList={this.state.wtrBooks} />
-            <Bookshelf title="Read" bookList={this.state.readBooks} />
+            {this.state.books.map((bookshelf) => (
+              <Bookshelf
+                key={bookshelf[0].shelf}
+                title={shelfType[bookshelf[0].shelf]}
+                bookList={bookshelf}
+              />
+            ))}
           </div>
         </div>
         <div className="open-search">
