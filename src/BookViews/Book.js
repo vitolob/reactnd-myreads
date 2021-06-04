@@ -13,7 +13,7 @@ export default function Book(props) {
           }}
         />
         <div className="book-shelf-changer">
-          <select>
+          <select value={props.data.shelf}>
             <option value="move" disabled>
               Move to...
             </option>
